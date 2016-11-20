@@ -1,0 +1,11 @@
+.idea
+*/
+
+!demo
+!demo/**
+
+!fonts
+!fonts/**
+
+!test
+!test/**

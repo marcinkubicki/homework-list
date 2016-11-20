@@ -1,0 +1,109 @@
+<link rel="import" href="./bower_components/polymer/polymer.html">
+
+<!--
+`homework-list`
+
+
+@demo demo/index.html 
+-->
+
+<dom-module id="homework-list">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 2em;
+                overflow: hidden;
+                background-color: white;
+            }
+
+            li {
+                color: white;
+                background-color: #B8B8B8;
+                font-size: 2em;
+                text-align: center;
+                padding: .5em;
+                margin: .5em;
+                text-decoration: none;
+                user-select: none;
+                cursor: pointer;
+            }
+
+            li[disabled] {
+                background-color: rgba(0, 0, 0, 0.05);
+                cursor: default;
+            }
+
+            li[checked] {
+                background-color: black;
+            }
+
+            body {
+                font-family: 'Roboto', sans-serif;
+                font-size: 14px;
+
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: 0;
+            }
+
+            @font-face {
+                font-family: 'Roboto';
+                src: url('fonts/Roboto-Light.eot');
+                src: url('fonts/Roboto-Light.ttf') format('truetype'),
+                url('fonts/Roboto-Light.woff') format('woff'),
+                url('fonts/Roboto-Light.svg#robotolight') format('svg');
+                font-weight: 300;
+                font-style: normal;
+            }
+        </style>
+        <ul id="container"></ul>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'homework-list',
+
+            _documentFragment: document.createDocumentFragment(),
+
+            ready() {
+                this._handleElement();
+                Polymer.dom(this.$.container).appendChild(this._documentFragment);
+                this.$.container.addEventListener('click', function (event) {
+                    alert('element ' + event.target.innerHTML)
+                });
+            },
+
+            _handleElement: function () {
+                var i, element;
+
+                for (i = 1; i <= 100; i++) {
+                    element = document.createElement('li');
+                    element.innerHTML = i;
+                    if (i % 3 !== 0) {
+                        element.setAttribute('disabled', '');
+                    }
+                    element.addEventListener('click', function (event) {
+                        if (event.target.hasAttribute('disabled')) {
+                            event.preventDefault();
+                            event.stopImmediatePropagation();
+                        } else if(event.target.hasAttribute('checked')){
+                            event.target.removeAttribute('checked', '')
+                        } else {
+                            event.target.setAttribute('checked', '')
+                        }
+                    }, true);
+                    Polymer.dom(this._documentFragment).appendChild(element)
+                }
+            }
+        });
+    </script>
+</dom-module>
